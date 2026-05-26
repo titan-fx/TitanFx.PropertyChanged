@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".csharpierignore" />
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="Directory.Build.props" />
+  </Folder>
+  <Project Path="TitanFx.PropertyChanged.Tests/TitanFx.PropertyChanged.Tests.csproj" Id="cf0dd552-7ae2-475b-9c16-d2ba5ae31a0d" />
+  <Project Path="TitanFx.PropertyChanged.UnitTests/TitanFx.PropertyChanged.UnitTests.csproj" Id="f65c3888-6aba-40cc-bc95-72fdeab2a282" />
+  <Project Path="TitanFx.PropertyChanged/TitanFx.PropertyChanged.csproj" />
+</Solution>
