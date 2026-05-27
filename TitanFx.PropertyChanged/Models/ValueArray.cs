@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace TitanFx.PropertyChanged;
+namespace TitanFx.PropertyChanged.Models;
 
 internal sealed class ValueArray<T> : IReadOnlyList<T>, IEquatable<ValueArray<T>>
 {

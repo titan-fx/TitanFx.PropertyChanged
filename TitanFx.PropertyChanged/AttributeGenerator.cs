@@ -1,15 +1,10 @@
 ﻿using Microsoft.CodeAnalysis;
+using static TitanFx.PropertyChanged.Models.Constants;
 
 namespace TitanFx.PropertyChanged;
 
 internal static class AttributeGenerator
 {
-    public const string NotifyPropertyChangedAttribute = nameof(NotifyPropertyChangedAttribute);
-    public const string NotifyPropertyChangingAttribute = nameof(NotifyPropertyChangingAttribute);
-    public const string NotifyAdditionalPropertiesAttribute = nameof(
-        NotifyAdditionalPropertiesAttribute
-    );
-
     internal static void Initialize(IncrementalGeneratorInitializationContext context)
     {
         context.RegisterPostInitializationOutput(Output);
@@ -18,30 +13,49 @@ internal static class AttributeGenerator
     private static void Output(IncrementalGeneratorPostInitializationContext context)
     {
         context.AddSource("Attributes.g.cs", _sourceCode);
+        context.AddEmbeddedAttributeDefinition();
     }
-
-    private const string _tAttribute = "global::System.Attribute";
-    private const string _tAttributeUsage = "global::System.AttributeUsageAttribute";
-    private const string _tAttributeTargets = "global::System.AttributeTargets";
-    private const string _tString = "global::System.String";
 
     private const string _sourceCode = $$"""
         #nullable enable
-        namespace Microsoft.CodeAnalysis
+
+        namespace {{RootNamespace}}
         {
-            internal sealed partial class EmbeddedAttribute : {{_tAttribute}} { }
-        }
+            [{{Types.EmbeddedAttribute}}]
+            [{{Types.AttributeUsage}}({{Types.AttributeTargets}}.Class | {{Types.AttributeTargets}}.Struct, AllowMultiple = false, Inherited = false)]
+            internal sealed class {{NotifyPropertyChanged}} : {{Types.Attribute}} { }
 
-        namespace TitanFx.PropertyChanged
-        {
-            [{{_tAttributeUsage}}({{_tAttributeTargets}}.Class | {{_tAttributeTargets}}.Struct | {{_tAttributeTargets}}.Property, AllowMultiple = false, Inherited = false)]
-            internal sealed class {{NotifyPropertyChangedAttribute}} : {{_tAttribute}} { }
+            [{{Types.EmbeddedAttribute}}]
+            [{{Types.AttributeUsage}}({{Types.AttributeTargets}}.Class | {{Types.AttributeTargets}}.Struct, AllowMultiple = false, Inherited = false)]
+            internal sealed class {{NotifyPropertyChanging}} : {{Types.Attribute}} { }
 
-            [{{_tAttributeUsage}}({{_tAttributeTargets}}.Class | {{_tAttributeTargets}}.Struct | {{_tAttributeTargets}}.Property, AllowMultiple = false, Inherited = false)]
-            internal sealed class {{NotifyPropertyChangingAttribute}} : {{_tAttribute}} { }
+            [{{Types.EmbeddedAttribute}}]
+            [{{Types.AttributeUsage}}({{Types.AttributeTargets}}.Property, AllowMultiple = false, Inherited = false)]
+            internal sealed class {{NotifyPropertyChange}} : {{Types.Attribute}} 
+            {
+                public {{Types.Boolean}} {{Skip}} { get; init; } = false;
 
-            [{{_tAttributeUsage}}({{_tAttributeTargets}}.Property, AllowMultiple = false, Inherited = false)]
-            internal sealed class {{NotifyAdditionalPropertiesAttribute}}(params {{_tString}}[] dependencies) : {{_tAttribute}} { }
+                private readonly {{Types.String}}[] {{AffectsField}} = [];
+                public {{Types.String}}[] {{AffectsProp}}
+                {
+                    get
+                    {
+                        var result = new {{Types.String}}[{{AffectsField}}.Length];
+                        {{AffectsField}}.CopyTo(result, 0);
+                        return result;
+                    }
+                    init 
+                    {
+                        {{AffectsField}} = new {{Types.String}}[value.Length];
+                        value.CopyTo({{AffectsField}}, 0);
+                    }
+                }
+            }
+
+            [{{Types.EmbeddedAttribute}}]
+            internal delegate void {{Setter}}<TState, TValue>(in TState state, TValue value)
+                where TState : allows ref struct
+                where TValue : allows ref struct;
         }
         """;
 }
