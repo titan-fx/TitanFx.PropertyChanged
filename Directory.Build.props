@@ -8,7 +8,7 @@
     <RepositoryUrl>https://github.com/titan-fx/TitanFx.DUnion</RepositoryUrl>
     <PackageProjectUrl>https://github.com/titan-fx/TitanFx.DUnion</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageTags>discriminatedunion taggedunion union sourcegenerator codegenerator sourcegen codegen attribute</PackageTags>
+    <PackageTags>inotifypropertychanged inotifypropertychanging propertychanged propertychanging sourcegenerator codegenerator codegen</PackageTags>
     <Version>$(VersionPrefix)$(VersionSuffix)</Version>
     <VersionPrefix>1.0.2</VersionPrefix>
     <VersionSuffix>build-$([System.DateTime]::Now.ToString("yyyyMMddHHmmss"))</VersionSuffix>
