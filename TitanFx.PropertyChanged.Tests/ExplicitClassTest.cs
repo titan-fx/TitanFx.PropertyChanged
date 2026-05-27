@@ -1,6 +1,6 @@
 ﻿namespace TitanFx.PropertyChanged.Tests;
 
-[NotifyPropertyChanged]
+[NotifyPropertyChanged, NotifyPropertyChanging]
 public partial class ExplicitClassTest
 {
     public required string Unreactive1 { get; set; }
@@ -37,7 +37,7 @@ public partial class ExplicitClassTest
     private protected partial string? PrivateProtectedReactiveInit { get; init; }
 }
 
-partial class ExplicitClassTest
+public partial class ExplicitClassTest
 {
     public partial string Unreactive3
     {

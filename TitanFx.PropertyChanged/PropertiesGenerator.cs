@@ -86,7 +86,7 @@ internal static class PropertiesGenerator
         if (property.IsRefStruct)
         {
             sourceGen.Write(
-                $"{Set}<{property.Type}>(field == value, ref field, value, {string.Join(", ", escapedNames)})"
+                $"{Set}<{property.Type}>(field != value, ref field, value, {string.Join(", ", escapedNames)})"
             );
         }
         else

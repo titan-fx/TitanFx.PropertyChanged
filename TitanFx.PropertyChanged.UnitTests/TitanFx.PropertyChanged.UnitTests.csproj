@@ -27,13 +27,4 @@
   <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Update="SourceGeneratorTests.Test1Async#Root.NotifyEverything`0.Properties.g.verified.cs">
-      <DependentUpon>SourceGeneratorTests.cs</DependentUpon>
-    </None>
-    <None Update="SourceGeneratorTests.Test1Async#Root.NotifyIndividualProperties`0.PropertyChanged.g.verified.cs">
-      <DependentUpon>SourceGeneratorTests.cs</DependentUpon>
-    </None>
-  </ItemGroup>
 </Project>

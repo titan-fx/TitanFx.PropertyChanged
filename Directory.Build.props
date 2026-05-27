@@ -1,5 +1,10 @@
 <Project>
   <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <IsPackable>False</IsPackable>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(IsPackable)">
     <Authors>danny-may</Authors>
     <Copyright>Copyright © Danny May</Copyright>
     <NeutralLanguage>en-GB</NeutralLanguage>
@@ -16,19 +21,25 @@
     <RepositoryType>git</RepositoryType>
     <DebugType>embedded</DebugType>
     <NoPackageAnalysis>true</NoPackageAnalysis>
-    <LangVersion>latest</LangVersion>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageOutputPath>$(MSBuildThisFileDirectory)\artifacts</PackageOutputPath>
-    <IsPackable>False</IsPackable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Include="$(ProjectDir)\README.md" Pack="true" PackagePath="\" />
-  </ItemGroup>
-
-  <ItemGroup>
+  <ItemGroup Condition="$(IsPackable)">
+    <None
+      Condition="!Exists('$(ProjectDir)\README.md')"
+      Include="$(ProjectDir)\..\README.md"
+      Pack="true"
+      PackagePath="\"
+    />
+    <None
+      Condition="Exists('$(ProjectDir)\README.md')"
+      Include="$(ProjectDir)\README.md"
+      Pack="true"
+      PackagePath="\"
+    />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
   </ItemGroup>
 </Project>
